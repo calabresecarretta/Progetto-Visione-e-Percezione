@@ -20,6 +20,7 @@ Prima di eseguire il codice, assicurarsi di avere:
   - `pycocotools`
   - `scikit-image`
   - `pyntcloud`
+  - `torch` 
 
 ## Struttura del Progetto
 
@@ -40,20 +41,23 @@ Dopo aver eseguito tutto il progetto, inclusa l'esecuzione e l'addestramento del
 │   ├── COCO dataset/                       # Cartella per il dataset COCO
 │   │   ├── images/
 │   │   │   ├── train2017/                  # Immagini per il training
-│   │   │   └── val2017/                    # Immagini per la validazione
+│   │   │   ├── val2017/                    # Immagini per la validazione
+│   │   │   └── test/                       # Immagini per il test
 │   │   └── annotation/
 │   │       ├── instances_train2017/        # Annotazioni per il training
 │   │       └── instances_val2017/          # Annotazioni per la validazione
-│   ├── DatasetdiTest/                      # Cartella per il dataset di test
-│   │   └── images/                         # Immagini per il test
 │   ├── Modello/                            # Cartella per il modello e le metriche
-│   │   ├── modello.keras                   # File del modello in formato Keras
-│   │   └── metriche/
-│   │       ├── history.json                # File JSON con la cronologia delle metriche
-│   │       └── tabella_metriche.png        # Tabella di metriche in formato leggibile
+│   │   ├── modello_vgg.keras               # Modello VGG in formato Keras
+│   │   ├── modello_resnet.keras            # Modello ResNet in formato Keras
+│   │   ├── history.json                    # File JSON con la cronologia delle metriche
+│   │   ├── tabella_metriche_train.png      # Tabella metriche per il training
+│   │   └── tabella_metriche_val.png        # Tabella metriche per la validazione
+│   ├── output/                             # Cartella per le predizioni salvate
+│   │   └── image...                        # File di output delle predizioni
 │   ├── codice.ipynb                        # Notebook principale
 │   │               
 │   └── README.md                           # File README con descrizione del progetto
+
 ```
 
 ### Contenuto della Cartella
@@ -64,19 +68,18 @@ Dopo aver eseguito tutto il progetto, inclusa l'esecuzione e l'addestramento del
    - **annotation/**: Include le annotazioni di segmentazione per ciascuna immagine.
      - **instances_train2017/**: Annotazioni per il set di addestramento.
      - **instances_val2017/**: Annotazioni per il set di validazione.
+   - la cartella di test viene generata dal codice a partire dalla cartella val
 
-2. **DatasetdiTest/**: contiene le immagini per il dataset di test utilizzate per valutare il modello addestrato su dati non presenti nei set di addestramento e validazione.
-   - **images/**: Include tutte le immagini di test necessarie per verificare le prestazioni del modello su dati esterni.
 
-3. **Modello/**: contiene il modello addestrato e i file che descrivono le metriche associate per monitorare il progresso dell'addestramento e le prestazioni del modello.
+2. **Modello/**: contiene il modello addestrato e i file che descrivono le metriche associate per monitorare il progresso dell'addestramento e le prestazioni del modello.
    - `modello.keras`: File del modello addestrato salvato in formato Keras.
-   - **metriche/**: Cartella dedicata alle metriche di addestramento.
-     - `history.json`: File JSON che contiene la cronologia delle metriche di addestramento, utile per il tracciamento delle prestazioni (perdita, accuratezza) nel tempo.
-     - `tabella_metriche.png`: Riepilogo tabellare delle metriche di valutazione, che facilita un confronto chiaro dei risultati.
+   - `history.json`: File JSON che contiene la cronologia delle metriche di addestramento, utile per il tracciamento delle prestazioni (perdita, accuratezza) nel tempo.
+   - `tabella_metriche_train.png`: Riepilogo tabellare delle metriche di valutazione per il dataset di training, che facilita un confronto chiaro dei risultati.
+   - `tabella_metriche_val.png`: Riepilogo tabellare delle metriche di valutazione per il dataset di validazione, che facilita un confronto chiaro dei risultati.
 
-4. **codice.ipynb**: file notebook contenente l'intero codice suddiviso in celle.
+3. **codice.ipynb**: file notebook contenente l'intero codice suddiviso in celle.
 
-5. **README.md**: documentazione principale che descrive l’obiettivo del progetto, l’organizzazione della cartella, le dipendenze e le istruzioni per l’uso.
+4. **README.md**: documentazione principale che descrive l’obiettivo del progetto, l’organizzazione della cartella, le dipendenze e le istruzioni per l’uso.
 
 # Istruzioni per l'esecuzione del progetto
 
@@ -133,15 +136,7 @@ Per eseguire il progetto correttamente, seguire i passaggi descritti di seguito.
      ```python
      addestramento = True  # Cambia in False per usare il modello pre-addestrato
      ```
-
-## 5. Selezione delle immagini di test personalizzate
-   - Se si desidera utilizzare immagini di test diverse da quelle presenti nella cartella `DatasetdiTest/images`, impostare il percorso alla cartella desiderata modificando la variabile `test_images_custom` in **cella 3**:
-     ```python
-     test_images_custom = "C:/user/mariorossi/mie_immagini_test"
-     ```
-   - Se lasciata vuota o impostata come `None`, il codice utilizzerà automaticamente le immagini di test predefinite.
-
-## 6. Esecuzione del codice
+## 5. Esecuzione del codice
    - Dopo aver configurato le variabili, eseguire tutte le celle del notebook selezionando **"Run all cells"** dal menu di Jupyter Notebook o premendo `Shift + Enter` su ciascuna cella.
 
 Seguendo queste istruzioni, sarà possibile configurare e utilizzare il progetto correttamente.
